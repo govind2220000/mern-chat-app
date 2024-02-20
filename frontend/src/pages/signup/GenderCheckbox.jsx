@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-const GenderCheckbox = () => {
+const GenderCheckbox = ({ onCheckboxChange }) => {
   const [gender, setGender] = useState(null);
   return (
     <div className="flex">
@@ -11,9 +11,12 @@ const GenderCheckbox = () => {
           <input
             type="checkbox"
             name="Gender"
-            value="Male"
-            checked={gender === "Male"} //this checks the checkbox only if state variable value is Male and by default state var value is null.
-            onChange={(e) => setGender(e.target.value)}
+            value="male"
+            checked={gender === "male"} //this checks the checkbox only if state variable value is Male and by default state var value is null.
+            onChange={(e) => {
+              setGender(e.target.value);
+              onCheckboxChange(e.target.value);
+            }}
             className="checkbox checkbox-info border-slate-900"
           />
         </label>
@@ -25,9 +28,12 @@ const GenderCheckbox = () => {
           <input
             type="checkbox"
             name="Gender"
-            value="Female"
-            checked={gender === "Female"} //this checks the checkbox only if state variable value is Male and by default state var value is null..
-            onChange={(e) => setGender(e.target.value)}
+            value="female"
+            checked={gender === "female"} //this checks the checkbox only if state variable value is Male and by default state var value is null..
+            onChange={(e) => {
+              setGender(e.target.value);
+              onCheckboxChange(e.target.value);
+            }}
             className="checkbox checkbox-info border-slate-900"
           />
         </label>

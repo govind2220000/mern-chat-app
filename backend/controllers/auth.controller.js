@@ -16,7 +16,10 @@ export const signup = async (req, res) => {
     if (password !== confirmPassword) {
       return res.status(400).json({ error: "Passwords dont match" });
     }
-    const user = await User.findOne({ userName, email });
+    const user = await User.findOne({
+      userName: new RegExp("^" + userName + "$", "i"),
+      email: new RegExp("^" + email + "$", "i"),
+    });
     //console.log(user);
     if (user) {
       return res.status(400).json({ error: "Username/Email already exists" });
@@ -51,8 +54,17 @@ export const signup = async (req, res) => {
       return res.status(500).json({ error: "Invalid User data" });
     }
   } catch (error) {
-    console.log("Something went wrong in Signup Controller", error.message);
-    res.status(500).json({ error: "Internal Server error" });
+    if (error.code === 11000) {
+      // Handle duplicate key error here
+      console.log(
+        "A user with this email/username already exists.",
+        error.message
+      );
+      res.status(400).json({ error: "Username/Email already exists" });
+    } else {
+      console.log("Something went wrong in Signup Controller", error.message);
+      res.status(500).json({ error: "Internal Server error" });
+    }
   }
 };
 
@@ -60,7 +72,12 @@ export const login = async (req, res) => {
   try {
     const { userName, email, password } = req.body;
     //console.log(userName, email, password);
-    const user = await User.findOne({ $or: [{ userName }, { email }] });
+    const user = await User.findOne({
+      $or: [
+        { userName: new RegExp("^" + userName + "$", "i") },
+        { email: new RegExp("^" + email + "$", "i") },
+      ],
+    });
     //console.log(user);
     if (!user) {
       return res.status(400).json({ error: "User does not exist" });

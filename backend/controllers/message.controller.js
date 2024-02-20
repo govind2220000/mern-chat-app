@@ -1,5 +1,7 @@
 import Conversation from "../chatmodels/conversation.model.js";
 import Message from "../chatmodels/message.model.js";
+import { getReceiverSocketId } from "../socket/socket.js";
+import { io } from "../socket/socket.js";
 
 export const sendMessage = async (req, res) => {
   try {
@@ -23,11 +25,16 @@ export const sendMessage = async (req, res) => {
       // await conversation.save(); Here we have to wait for the promise to resolve after that below will be executed.
       // await newMessage.save();
     }
+    //but here both saves will be done parallely
+    await Promise.all([conversation.save(), newMessage.save()]);
 
     //SOCKET IO Functionality will go here
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", newMessage);
+    }
 
-    await Promise.all([conversation.save(), newMessage.save()]); //but here both saves will be done parallely
-    res.status(201).json({ newMessage });
+    res.status(201).json(newMessage);
   } catch (err) {
     console.log("Error in sendMessage controller:", err.message);
     res.status(500).json({ error: "Internal Server Error" });
