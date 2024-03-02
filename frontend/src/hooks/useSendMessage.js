@@ -19,7 +19,9 @@ const useSendMessage = () => {
       if (res.data.error) {
         throw new Error(res.data.error);
       }
+      console.log("Before backend completed Message", messages);
       setMessages([...messages, res.data]);
+      console.log("After backend completed Message", messages);
     } catch (error) {
       toast.error(error.message);
     } finally {

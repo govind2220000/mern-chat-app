@@ -7,7 +7,7 @@ const Conversations = () => {
   const { loading, conversations } = useGetConversations();
   //console.log("Conversations:", conversations);
   return (
-    <div className="py-2 flex flex-col overflow-auto ">
+    <div className="py-2 flex flex-col overflow-auto bg-slate-900">
       {/* For each conversation in the array, the map function provides two arguments to the callback function: the current item (conversation) and its index (idx). */}
       {conversations.map((conversation, idx) => (
         <Conversation

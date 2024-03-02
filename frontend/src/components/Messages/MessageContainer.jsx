@@ -7,13 +7,16 @@ import { useAuthContext } from "../../context/AuthContext.jsx";
 
 const MessageContainer = () => {
   const { selectedConversation, setSelectedConversation } = useConversation();
+  //console.log("Selected Conversation1", selectedConversation);
 
   useEffect(() => {
+    //console.log("Selected Conversation2", selectedConversation);
     //cleanup function
     return () => {
       setSelectedConversation(null);
     };
-  }, [setSelectedConversation]);
+  }, []); //this will run on every unmounting so that we can reset the selectedConversation and the if the user logs in again this global state variable should be resseted
+
   return (
     <div className="md:min-w-[450px] flex flex-col">
       {!selectedConversation ? (

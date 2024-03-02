@@ -15,7 +15,7 @@ const Message = ({ message }) => {
   // console.log(
   //   `Message:${message.senderId}, fromMe:${fromMe},authuser:${authuser._id}`
   // );
-  console.log(message);
+  //console.log(message);
   const shakeClass = message.shouldShake ? "shake" : "";
   return (
     <div className={`chat ${chatClassName}`}>
