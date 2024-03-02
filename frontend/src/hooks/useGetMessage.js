@@ -12,7 +12,7 @@ const useGetMessage = () => {
       setLoading(true);
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/messages/${selectedConversation._id}`,
+          `/api/messages/${selectedConversation._id}`,
           {
             withCredentials: true,
           }

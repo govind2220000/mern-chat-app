@@ -11,7 +11,7 @@ const useSendMessage = () => {
     setLoading(true);
     try {
       const res = await axios.post(
-        `http://localhost:8000/api/messages/send/${selectedConversation._id}`,
+        `/api/messages/send/${selectedConversation._id}`,
         { message },
         { withCredentials: true },
         { headers: { "Content-Type": "application/json" } }

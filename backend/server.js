@@ -22,10 +22,9 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://mern-chat-app-prod-r0p8.onrender.com",
+    origin: "http://localhost:3000",
     credentials: true,
-    "Access-Control-Allow-Origin":
-      "https://mern-chat-app-prod-r0p8.onrender.com",
+    "Access-Control-Allow-Origin": "http://localhost:3000",
   })
 );
 app.use("/api/auth", authRoutes);

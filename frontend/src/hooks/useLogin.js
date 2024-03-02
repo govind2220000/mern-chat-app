@@ -18,7 +18,7 @@ const useLogin = () => {
     setLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:8000/api/auth/login",
+        "/api/auth/login",
         {
           userName: username,
           password: password,

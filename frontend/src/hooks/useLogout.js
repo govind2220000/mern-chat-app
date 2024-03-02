@@ -11,7 +11,7 @@ const useLogout = () => {
     setLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:8000/api/auth/logout",
+        "/api/auth/logout",
         {},
         { withCredentials: true },
         { headers: { "Content-Type": "application/json" } }
