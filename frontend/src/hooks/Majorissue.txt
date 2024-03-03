@@ -1,0 +1,6 @@
+I would like to bring a bug to your attention regarding the project. The issue is that when we are viewing a conversation with one user and another user sends us a message, that message is also displayed in the conversation we are currently viewing, even if it is with a different user.
+
+For instance, suppose there are three users - John, Bob, and Daisy. John and Bob are online, and if Bob sends a message to John while John is viewing his conversation with Daisy, Bob's messages are still displayed in Daisy's conversation. Please refer below screenshot for the same.This issue might be due to zutsand global messages variable we created its getting updated for both cases when we select a conversation and when we listen to socket for the new incoming messages.
+
+
+Resolution is while listening to the newMessage Event we have to check whether the selectedConversation._Id == newMessage.senderId if its true then we can update messages global variable else we dont need to update it
