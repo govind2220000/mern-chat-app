@@ -5,15 +5,17 @@ import notificationSound from "../assets/sounds/frontend-src-assets-sounds-notif
 
 const useListenMessages = () => {
   const { socket } = useSocketContext();
-  const { messages, setMessages } = useConversation();
+  const { messages, setMessages, selectedConversation } = useConversation();
 
   useEffect(() => {
     //we are "socket?.on" in case if we dpnt have any socket connection object it should not crash
     socket?.on("newMessage", (newMessage) => {
-      newMessage.shouldShake = true;
       const sound = new Audio(notificationSound);
       sound.play();
-      setMessages([...messages, newMessage]);
+      if (selectedConversation._id == newMessage.senderId) {
+        newMessage.shouldShake = true;
+        setMessages([...messages, newMessage]);
+      }
     });
 
     //cleanup function
